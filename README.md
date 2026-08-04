@@ -90,3 +90,6 @@ portfolio/
 ---
 
 <p align="center">Made with ❤️ by Diya Garg</p>
+
+Star My Portfolio
+
