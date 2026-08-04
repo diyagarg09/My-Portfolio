@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, User, FolderGit2, FileText, Heart, Menu, X } from 'lucide-react';
+import { Home, User, FolderGit2, FileText, Heart, Menu, X, Trophy, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 
@@ -11,6 +11,8 @@ const navigationLinks = [
   { name: 'Home', href: '#home', icon: Home },
   { name: 'About', href: '#about', icon: User },
   { name: 'Projects', href: '#projects', icon: FolderGit2 },
+  { name: 'Milestones', href: '#milestones', icon: Trophy },
+  { name: 'Contact', href: '#contact', icon: Mail },
   { name: 'Resume', href: '#resume', icon: FileText, isResumeTrigger: true },
 ];
 
@@ -25,7 +27,7 @@ export default function Navbar({ onOpenResume }) {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = ['home', 'about', 'projects', 'milestones'];
+      const sections = ['home', 'about', 'skills', 'projects', 'milestones', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -86,8 +88,8 @@ export default function Navbar({ onOpenResume }) {
           },
           EMAILJS_PUBLIC_KEY
         );
-      } catch (_err) {
-        console.log('Like notification email sent');
+      } catch (err) {
+        console.log('Like notification email attempt complete:', err);
       }
     } else {
       setLikeCount(prev => prev - 1);
