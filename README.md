@@ -11,7 +11,6 @@ A modern, animated personal portfolio built with **React + Vite**, featuring a g
 - 🧠 **Projects Section** — Detailed expandable modal cards with architecture breakdowns
 - 🏆 **Milestones Section** — Competitive programming & open-source achievements
 - 📄 **Resume Modal** — Inline resume viewer with PDF print support
-- 💌 **EmailJS Integration** — Like-button sends an email alert to the owner
 - 📱 **Fully Responsive** — Mobile-first layout with smooth transitions
 - ⚡ **Fast Build** — Vite-powered, production bundle under 400KB
 
@@ -25,7 +24,6 @@ A modern, animated personal portfolio built with **React + Vite**, featuring a g
 | Styling | Tailwind CSS v4 |
 | Animations | Framer Motion |
 | Icons | Lucide React |
-| Email | EmailJS |
 | Linting | Oxlint |
 
 ---
@@ -59,7 +57,7 @@ portfolio/
 ├── src/
 │   ├── components/
 │   │   ├── IntroSplashScreen.jsx  # Animated splash screen
-│   │   ├── Navbar.jsx             # Sticky navigation with like button
+│   │   ├── Navbar.jsx             # Sticky navigation bar
 │   │   ├── Hero.jsx               # Landing section with typewriter
 │   │   ├── About.jsx              # Stats & expertise pillars
 │   │   ├── Skills.jsx             # Filterable skill tags
