@@ -77,7 +77,7 @@ portfolio/
 
 ## 🌐 Live Demo
 
-> Coming soon — deploy link will be added here.
+> diyagarg-portfolio.vercel.app
 
 ---
 
