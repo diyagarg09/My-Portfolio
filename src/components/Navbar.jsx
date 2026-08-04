@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Home, User, FolderGit2, FileText, Heart, Menu, X, Trophy, Mail } from 'lucide-react';
+import { Home, User, FolderGit2, FileText, Menu, X, Trophy } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import emailjs from '@emailjs/browser';
-
-const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_portfolio';
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_portfolio';
-const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'public_key_portfolio';
 
 const navigationLinks = [
   { name: 'Home', href: '#home', icon: Home },
   { name: 'About', href: '#about', icon: User },
   { name: 'Projects', href: '#projects', icon: FolderGit2 },
   { name: 'Milestones', href: '#milestones', icon: Trophy },
-  { name: 'Contact', href: '#contact', icon: Mail },
   { name: 'Resume', href: '#resume', icon: FileText, isResumeTrigger: true },
 ];
 
@@ -20,14 +14,12 @@ export default function Navbar({ onOpenResume }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [likeCount, setLikeCount] = useState(1);
-  const [hasLiked, setHasLiked] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = ['home', 'about', 'skills', 'projects', 'milestones', 'contact'];
+      const sections = ['home', 'about', 'skills', 'projects', 'milestones'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -64,36 +56,6 @@ export default function Navbar({ onOpenResume }) {
       });
       setActiveSection(targetId);
       setIsMobileMenuOpen(false);
-    }
-  };
-
-  const handleLike = () => {
-    if (!hasLiked) {
-      const newCount = likeCount + 1;
-      setLikeCount(newCount);
-      setHasLiked(true);
-
-      // Send email alert for new like
-      try {
-        emailjs.send(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          {
-            from_name: 'Portfolio Visitor',
-            from_email: 'visitor@portfolio.com',
-            user_email: 'visitor@portfolio.com',
-            message: `❤️ Someone liked your portfolio website! Total Likes: ${newCount}`,
-            to_name: 'Diya Garg',
-            to_email: 'diyagarg9122005@gmail.com',
-          },
-          EMAILJS_PUBLIC_KEY
-        );
-      } catch (err) {
-        console.log('Like notification email attempt complete:', err);
-      }
-    } else {
-      setLikeCount(prev => prev - 1);
-      setHasLiked(false);
     }
   };
 
@@ -134,33 +96,10 @@ export default function Navbar({ onOpenResume }) {
               </a>
             );
           })}
-
-          {/* Heart / Star Counter Button */}
-          <button
-            onClick={handleLike}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shadow-xs shrink-0 whitespace-nowrap ${
-              hasLiked
-                ? 'bg-gradient-to-r from-[#7C3AED] to-[#EC4899] text-white shadow-pink-500/20 scale-105'
-                : 'bg-purple-50 text-[#7C3AED] border border-purple-100 hover:bg-gradient-to-r hover:from-[#7C3AED] hover:to-[#EC4899] hover:text-white hover:border-transparent'
-            }`}
-          >
-            <Heart className={`w-3.5 h-3.5 ${hasLiked ? 'fill-current' : ''}`} />
-            <span>{likeCount}</span>
-          </button>
         </nav>
 
         {/* Mobile Toggle */}
         <div className="flex md:hidden items-center gap-3 shrink-0">
-          <button
-            onClick={handleLike}
-            className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap ${
-              hasLiked ? 'bg-gradient-to-r from-[#7C3AED] to-[#EC4899] text-white' : 'bg-purple-50 text-[#7C3AED] border border-purple-100'
-            }`}
-          >
-            <Heart className="w-3.5 h-3.5" />
-            <span>{likeCount}</span>
-          </button>
-
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 rounded-lg border border-purple-100 text-purple-950 bg-white"

@@ -42,11 +42,11 @@ const projects = [
   },
   {
     id: 3,
-    title: 'FineTrack — Smart Personal Finance Tracker',
+    title: 'FinTrack-Pro — Smart Personal Finance Tracker',
     category: 'Full-Stack & Fintech',
     icon: FileText,
     tags: ['React', 'Node.js', 'Express', 'MongoDB', 'Chart.js', 'Google Gemini AI', 'Tailwind CSS'],
-    repo: 'https://github.com/diyagarg09/FineTrack',
+    repo: 'https://github.com/diyagarg09/FinTrack-Pro',
     description: 'An end-to-end intelligent personal finance tracker featuring real-time expense categorization, visual budget analytics with Chart.js, and AI financial advice using Google Gemini.',
     problem: 'Manual expense tracking lacks actionable insights, predictive budgeting, and instant financial advice for students and young professionals.',
     solution: 'Built a full-stack MERN application with interactive dashboard charts, automated recurring expense categorization, monthly savings goal trackers, and Google Gemini AI insights for personalized budgeting guidance.',

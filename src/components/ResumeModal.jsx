@@ -143,13 +143,13 @@ export default function ResumeModal({ isOpen, onClose }) {
                   </ul>
                 </div>
 
-                {/* FineTrack */}
+                {/* FinTrack-Pro */}
                 <div>
                   <div className="flex justify-between items-baseline mb-1">
                     <h3 className="font-bold text-xs text-zinc-900">
-                      FineTrack — Smart Personal Finance Tracker <span className="font-normal italic text-zinc-600">| React, Node.js, Express, MongoDB, Chart.js, Google Gemini, Tailwind CSS</span>
+                      FinTrack-Pro — Smart Personal Finance Tracker <span className="font-normal italic text-zinc-600">| React, Node.js, Express, MongoDB, Chart.js, Google Gemini, Tailwind CSS</span>
                     </h3>
-                    <a href="https://github.com/diyagarg09/FineTrack" target="_blank" rel="noopener noreferrer" className="text-xs text-purple-700 font-semibold hover:underline flex items-center gap-0.5">
+                    <a href="https://github.com/diyagarg09/FinTrack-Pro" target="_blank" rel="noopener noreferrer" className="text-xs text-purple-700 font-semibold hover:underline flex items-center gap-0.5">
                       GitHub <ExternalLink className="w-2.5 h-2.5" />
                     </a>
                   </div>

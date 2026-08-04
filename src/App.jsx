@@ -6,7 +6,6 @@ import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Competitive from './components/Competitive';
-import Contact from './components/Contact';
 
 import Footer from './components/Footer';
 import ResumeModal from './components/ResumeModal';
@@ -35,7 +34,6 @@ function App() {
         <Skills />
         <Projects />
         <Competitive />
-        <Contact />
       </main>
 
       {/* Footer */}
