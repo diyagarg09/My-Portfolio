@@ -7,7 +7,7 @@ const stats = [
     label: 'Banasthali CGPA',
     value: '8.45/10',
     icon: Code2,
-    description: 'B.Tech Computer Science (through Sem 4)',
+    description: 'B.Tech CS & AI (through Sem 4)',
     color: 'from-[#7C3AED] to-pink-500',
   },
   {
@@ -21,7 +21,8 @@ const stats = [
     label: 'LeetCode Solved',
     value: '200+',
     icon: Server,
-    description: '50-Day Consistency Badge',
+    description: 'Profile: DIYAGARG_08',
+    url: 'https://leetcode.com/u/DIYAGARG_08/',
     color: 'from-emerald-500 to-teal-400',
   },
 ];
@@ -68,7 +69,7 @@ export default function About() {
               Software & ML Developer
               </h3>
               <p className="text-slate-600 leading-relaxed mb-6">
-                Currently pursuing B.Tech in Computer Science at Banasthali Vidyapith (CGPA 8.45/10). I specialize in developing intelligent applications, healthcare assistants, and robust full-stack platforms.
+                Currently pursuing B.Tech in Computer Science & Artificial Intelligence at Banasthali Vidyapith (CGPA 8.45/10). I specialize in developing intelligent applications, healthcare assistants, and robust full-stack platforms.
               </p>
               <p className="text-slate-600 leading-relaxed">
                 Active contributor in open-source events like Nexus Spring of Code (Ranked 125th/990) and qualifier in Google Big Code Challenge 2026.
@@ -77,27 +78,38 @@ export default function About() {
 
             {/* Statistics Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  className="p-5 rounded-2xl vibrant-card flex flex-col justify-between"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className={`w-8 h-8 rounded-lg bg-gradient-to-tr ${stat.color} flex items-center justify-center text-white shadow-xs`}>
-                      <stat.icon className="w-4.5 h-4.5" />
-                    </span>
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-extrabold text-purple-950">{stat.value}</h4>
-                    <p className="text-xs font-bold text-[#7C3AED] mt-1 mb-0.5">{stat.label}</p>
-                    <p className="text-[10px] text-slate-500 leading-tight">{stat.description}</p>
-                  </div>
-                </motion.div>
-              ))}
+              {stats.map((stat, index) => {
+                const CardWrapper = stat.url ? 'a' : 'div';
+                const cardProps = stat.url
+                  ? { href: stat.url, target: '_blank', rel: 'noopener noreferrer' }
+                  : {};
+
+                return (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <CardWrapper
+                      {...cardProps}
+                      className="p-5 rounded-2xl vibrant-card flex flex-col justify-between block h-full hover:scale-105 transition-transform"
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <span className={`w-8 h-8 rounded-lg bg-gradient-to-tr ${stat.color} flex items-center justify-center text-white shadow-xs`}>
+                          <stat.icon className="w-4.5 h-4.5" />
+                        </span>
+                      </div>
+                      <div>
+                        <h4 className="text-2xl font-extrabold text-purple-950">{stat.value}</h4>
+                        <p className="text-xs font-bold text-[#7C3AED] mt-1 mb-0.5">{stat.label}</p>
+                        <p className="text-[10px] text-slate-500 leading-tight">{stat.description}</p>
+                      </div>
+                    </CardWrapper>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 

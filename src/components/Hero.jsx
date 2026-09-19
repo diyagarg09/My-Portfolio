@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { Sparkles, Code, ArrowRight, Cpu, Layers } from 'lucide-react';
+import { Sparkles, Code, ArrowRight, Cpu, Layers, FileText } from 'lucide-react';
 
 const roles = [
-  'Software Developer',
+  'Software & AI Developer',
   'Full-Stack Developer',
+  'Machine Learning Engineer',
 ];
 
-export default function Hero({ _onOpenResume }) {
+export default function Hero({ onOpenResume }) {
   const [currentText, setCurrentText] = useState('');
   const [roleIndex, setRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -17,8 +18,8 @@ export default function Hero({ _onOpenResume }) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(mouseY, [-300, 300], [8, -8]), { stiffness: 150, damping: 15 });
-  const rotateY = useSpring(useTransform(mouseX, [-300, 300], [-8, 8]), { stiffness: 150, damping: 15 });
+  const rotateX = useSpring(useTransform(mouseY, [-300, 300], [6, -6]), { stiffness: 150, damping: 15 });
+  const rotateY = useSpring(useTransform(mouseX, [-300, 300], [-6, 6]), { stiffness: 150, damping: 15 });
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -63,88 +64,157 @@ export default function Hero({ _onOpenResume }) {
       id="home"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-[92vh] lg:flex lg:items-center lg:justify-center overflow-hidden pt-32 pb-24 px-6 vibrant-mesh-bg perspective-1000"
+      className="relative min-h-[92vh] flex flex-col justify-center overflow-hidden pt-28 pb-20 px-4 sm:px-6 bg-[#faf9f7] perspective-1000"
     >
-      {/* Dynamic Glowing Animated Background Orbs */}
+      {/* Dynamic Glowing Ambient Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[8%] left-[8%] w-[460px] h-[460px] bg-purple-500/20 rounded-full filter blur-[120px] animate-orb-1" />
-        <div className="absolute bottom-[5%] right-[5%] w-[520px] h-[520px] bg-pink-500/20 rounded-full filter blur-[140px] animate-orb-2" />
-        <div className="absolute top-[35%] right-[25%] w-[380px] h-[380px] bg-indigo-500/15 rounded-full filter blur-[110px] animate-orb-1" />
+        <div className="absolute top-[-5%] left-[-5%] w-[520px] h-[520px] bg-purple-500/20 rounded-full filter blur-[140px] animate-orb-1" />
+        <div className="absolute bottom-[-5%] right-[-5%] w-[560px] h-[560px] bg-pink-500/20 rounded-full filter blur-[150px] animate-orb-2" />
+        <div className="absolute top-[35%] right-[20%] w-[400px] h-[400px] bg-indigo-500/15 rounded-full filter blur-[120px] animate-orb-1" />
       </div>
 
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+      <div className="max-w-7xl mx-auto w-full flex flex-col items-center text-center relative z-10">
         
-        {/* Left Column: Floating Content & Text */}
+        {/* Top Badges */}
         <motion.div
-          className="lg:col-span-7 flex flex-col items-start text-left animate-float-slow"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{ rotateX, rotateY }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-wrap items-center justify-center gap-3 mb-6"
         >
-          {/* Top Pill Badges */}
-          <div className="flex flex-wrap items-center gap-2 mb-6">
-            <span className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold bg-pink-50 text-pink-800 border border-pink-200 shadow-sm transition-all hover:scale-105 hover:-translate-y-1 hover:shadow-pink-200">
-              <Sparkles className="w-3.5 h-3.5 text-pink-500 animate-pulse" />
-              Banasthali Vidyapith · CSE
-            </span>
-            <span className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold bg-purple-50 text-purple-800 border border-purple-200 shadow-sm transition-all hover:scale-105 hover:-translate-y-1 hover:shadow-purple-200">
-              <Code className="w-3.5 h-3.5 text-purple-500" />
-              CGPA: 8.45 / 10
-            </span>
-          </div>
+          <span className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold bg-pink-50 text-pink-800 border border-pink-200 shadow-sm transition-all hover:scale-105 hover:-translate-y-0.5">
+            <Sparkles className="w-3.5 h-3.5 text-pink-500 animate-pulse" />
+            Banasthali Vidyapith · CS & AI
+          </span>
+          <span className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold bg-purple-50 text-purple-800 border border-purple-200 shadow-sm transition-all hover:scale-105 hover:-translate-y-0.5">
+            <Code className="w-3.5 h-3.5 text-purple-500" />
+            CGPA: 8.45 / 10
+          </span>
+        </motion.div>
 
-          {/* Sub-greeting */}
-          <h2 className="text-lg sm:text-xl font-extrabold tracking-wider text-purple-900/70 uppercase mb-3 flex items-center gap-2">
-            <span>Welcome to my universe</span> <span className="animate-wave text-2xl">👋</span>
-          </h2>
+        {/* ── REFERENCE DESIGN ARTWORK BANNER: DIYA GARG PORTFOLIO ── */}
+        <motion.div
+          className="relative w-full max-w-5xl my-4 py-6 flex items-center justify-center"
+          style={{ rotateX, rotateY }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* Looping SVG Vector Ribbon passing around and through the text */}
+          <svg
+            viewBox="0 0 1000 320"
+            className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#7C3AED" />
+                <stop offset="45%" stopColor="#EC4899" />
+                <stop offset="80%" stopColor="#F59E0B" />
+                <stop offset="100%" stopColor="#7C3AED" />
+              </linearGradient>
+              <filter id="ribbonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
 
-          {/* Display Name */}
-          <div className="relative mb-4">
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight uppercase font-sans">
-              <span className="bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_4px_25px_rgba(236,72,153,0.3)]">
-                DIYA
-              </span>{' '}
-              <span className="bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-600 bg-clip-text text-transparent drop-shadow-[0_4px_30px_rgba(139,92,246,0.35)] ml-1 sm:ml-3">
-                GARG
+            {/* Ambient Background Ghost Text */}
+            <text
+              x="50%"
+              y="55%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="text-[110px] sm:text-[145px] font-black tracking-tighter uppercase fill-none stroke-purple-900/10 stroke-[2]"
+              style={{ fontFamily: 'sans-serif' }}
+            >
+              PORTFOLIO
+            </text>
+
+            {/* Glowing Looping Path 1 (Behind Text loop) */}
+            <path
+              d="M -40,190 C 180,310 160,-20 360,90 C 520,180 570,300 680,240 C 780,180 650,0 600,130 C 550,260 760,290 850,190 C 940,90 860,-20 780,110 C 700,240 880,290 1040,180"
+              stroke="url(#ribbonGrad)"
+              strokeWidth="6"
+              strokeLinecap="round"
+              filter="url(#ribbonGlow)"
+              className="opacity-95"
+            />
+
+            {/* Curving Circular Text Path */}
+            <path
+              id="textCurvePath"
+              d="M 60,180 C 220,290 190,-10 370,90 C 530,180 570,290 680,240 C 770,190 660,10 610,130"
+              fill="none"
+            />
+
+            <text className="text-[12px] font-extrabold uppercase tracking-[0.25em] fill-[#7C3AED]">
+              <textPath href="#textCurvePath" startOffset="5%">
+                ✦ SOFTWARE & AI DEVELOPER ✦ BANASTHALI VIDYAPITH ✦
+              </textPath>
+            </text>
+          </svg>
+
+          {/* Bold Foreground Title Text: PORTFOLIO / DIYA GARG */}
+          <div className="relative z-10 flex flex-col items-center justify-center">
+            <h1 className="text-6xl sm:text-8xl md:text-[110px] font-black tracking-tighter uppercase leading-none font-sans select-none drop-shadow-xl">
+              <span className="bg-gradient-to-r from-purple-700 via-fuchsia-600 to-pink-600 bg-clip-text text-transparent">
+                PORT
+              </span>
+              <span className="bg-gradient-to-r from-pink-600 via-fuchsia-600 to-purple-700 bg-clip-text text-transparent">
+                FOLIO
               </span>
             </h1>
-          </div>
-
-          {/* Typewriter Sub-headline */}
-          <div className="text-2xl sm:text-4xl font-bold min-h-[54px] flex items-center mb-6">
-            <span className="gradient-text-vibrant font-black tracking-tight">
-              {currentText}
-            </span>
-            <span className="typewriter-cursor" />
-          </div>
-
-          <p className="text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed font-sans mb-8 font-medium">
-            I'm a B.Tech student in Computer Science at Banasthali Vidyapith. I love building smart applications, machine learning models, and full-stack projects—like healthcare bots and fraud detection systems—to solve real problems.
-          </p>
-
-          {/* Action CTAs */}
-          <div className="flex flex-wrap items-center gap-4">
-            <a
-              href="#projects"
-              className="flex items-center gap-2.5 px-8 py-4 rounded-full text-xs font-black tracking-wider uppercase text-white shimmer-button shadow-xl shadow-purple-500/20 hover:shadow-purple-500/40 hover:-translate-y-1 hover:scale-105 transition-all duration-300"
-            >
-              Explore Projects
-              <ArrowRight className="w-4 h-4" />
-            </a>
+            
+            <div className="mt-2 px-6 py-1 rounded-full bg-white/80 backdrop-blur-md border border-purple-200/80 shadow-md">
+              <span className="text-sm sm:text-lg font-black tracking-widest uppercase text-purple-950">
+                DIYA GARG
+              </span>
+            </div>
           </div>
         </motion.div>
 
-        {/* Right Column: Levitating Developer Image & Floating 3D Skill Cards */}
+        {/* Dynamic Typewriter Sub-headline */}
+        <div className="text-xl sm:text-3xl font-bold min-h-[46px] flex items-center justify-center mb-4">
+          <span className="gradient-text-vibrant font-black tracking-tight">
+            {currentText}
+          </span>
+          <span className="typewriter-cursor" />
+        </div>
+
+        {/* Bio Paragraph */}
+        <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed font-sans mb-8 font-medium">
+          I'm a B.Tech student in Computer Science & Artificial Intelligence at Banasthali Vidyapith. I build intelligent machine learning systems, full-stack applications, healthcare bots, and AI summarizers.
+        </p>
+
+        {/* Action CTAs */}
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-14">
+          <a
+            href="#projects"
+            className="flex items-center gap-2.5 px-8 py-4 rounded-full text-xs font-black tracking-wider uppercase text-white shimmer-button shadow-xl shadow-purple-500/20 hover:shadow-purple-500/40 hover:-translate-y-1 hover:scale-105 transition-all duration-300"
+          >
+            Explore Projects
+            <ArrowRight className="w-4 h-4" />
+          </a>
+
+          <button
+            onClick={onOpenResume}
+            className="flex items-center gap-2 px-7 py-4 rounded-full text-xs font-black tracking-wider uppercase text-purple-950 bg-white border border-purple-200 shadow-md hover:border-purple-400 hover:bg-purple-50 hover:-translate-y-1 hover:scale-105 transition-all duration-300"
+          >
+            <FileText className="w-4 h-4 text-[#7C3AED]" />
+            View Resume
+          </button>
+        </div>
+
+        {/* Levitating Developer Preview & Floating Skill Cards */}
         <motion.div
-          className="lg:col-span-5 flex justify-center items-center relative"
-          initial={{ opacity: 0, scale: 0.9 }}
+          className="w-full max-w-3xl flex justify-center items-center relative mt-2"
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {/* Main Levitating Image Container */}
-          <div className="relative w-full max-w-[440px] aspect-square rounded-3xl p-3.5 border-2 border-purple-200/90 bg-white/80 backdrop-blur-2xl shadow-2xl shadow-purple-500/20 animate-float-medium tilt-card group">
-            {/* Soft Glowing Gradient Overlay */}
+          <div className="relative w-full max-w-[420px] aspect-square rounded-3xl p-3 border-2 border-purple-200/90 bg-white/90 backdrop-blur-2xl shadow-2xl shadow-purple-500/20 animate-float-medium tilt-card group">
             <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/15 via-pink-500/10 to-transparent pointer-events-none rounded-3xl" />
             
             <img
@@ -153,10 +223,10 @@ export default function Hero({ _onOpenResume }) {
               className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
             />
 
-            {/* Orbiting Floating Badge 1: ML & Systems */}
-            <div className="absolute -top-6 -left-6 bg-white/90 backdrop-blur-xl border border-purple-200 p-3 rounded-2xl shadow-xl animate-float-fast flex items-center gap-2.5 hover:scale-110 transition-transform">
+            {/* Floating Badge 1: ML & Systems */}
+            <div className="absolute -top-5 -left-5 bg-white/95 backdrop-blur-xl border border-purple-200 p-3 rounded-2xl shadow-xl animate-float-fast flex items-center gap-2.5 hover:scale-110 transition-transform">
               <div className="p-2 rounded-xl bg-purple-100 text-purple-700">
-                <Cpu className="w-5 h-5 text-purple-600" />
+                <Cpu className="w-4.5 h-4.5 text-purple-600" />
               </div>
               <div className="text-left">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Focus</p>
@@ -164,10 +234,10 @@ export default function Hero({ _onOpenResume }) {
               </div>
             </div>
 
-            {/* Orbiting Floating Badge 2: Full-Stack */}
-            <div className="absolute -bottom-6 -right-6 bg-white/90 backdrop-blur-xl border border-pink-200 p-3 rounded-2xl shadow-xl animate-float-slow flex items-center gap-2.5 hover:scale-110 transition-transform">
+            {/* Floating Badge 2: Full-Stack */}
+            <div className="absolute -bottom-5 -right-5 bg-white/95 backdrop-blur-xl border border-pink-200 p-3 rounded-2xl shadow-xl animate-float-slow flex items-center gap-2.5 hover:scale-110 transition-transform">
               <div className="p-2 rounded-xl bg-pink-100 text-pink-600">
-                <Layers className="w-5 h-5 text-pink-600" />
+                <Layers className="w-4.5 h-4.5 text-pink-600" />
               </div>
               <div className="text-left">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Stack</p>
@@ -181,3 +251,4 @@ export default function Hero({ _onOpenResume }) {
     </section>
   );
 }
+

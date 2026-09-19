@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mail, Heart, ArrowUp } from 'lucide-react';
-import { Github, Linkedin } from './icons';
+import { Github, Linkedin, Leetcode } from './icons';
 
 export default function Footer() {
   const handleScrollTop = () => {
@@ -51,6 +51,16 @@ export default function Footer() {
             title="LinkedIn"
           >
             <Linkedin className="w-4 h-4" />
+          </a>
+
+          <a
+            href="https://leetcode.com/u/DIYAGARG_08/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-9 h-9 rounded-full border border-purple-100 bg-white text-slate-600 hover:text-[#F59E0B] hover:border-[#F59E0B] flex items-center justify-center transition-all hover:scale-105"
+            title="LeetCode (DIYAGARG_08)"
+          >
+            <Leetcode className="w-4 h-4" />
           </a>
 
           <a

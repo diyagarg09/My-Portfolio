@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { X, Mail, Phone, ExternalLink, Printer } from 'lucide-react';
-import { Github, Linkedin } from './icons';
+import { Github, Linkedin, Leetcode } from './icons';
 
 export default function ResumeModal({ isOpen, onClose }) {
   if (!isOpen) return null;
@@ -69,6 +69,11 @@ export default function ResumeModal({ isOpen, onClose }) {
                 <a href="https://github.com/diyagarg09" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline text-purple-700">
                   <Github className="w-3 h-3" />
                   GitHub
+                </a>
+                <span>|</span>
+                <a href="https://leetcode.com/u/DIYAGARG_08/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline text-purple-700">
+                  <Leetcode className="w-3 h-3" />
+                  LeetCode
                 </a>
               </div>
             </div>
@@ -201,7 +206,7 @@ export default function ResumeModal({ isOpen, onClose }) {
                 <li><strong className="font-bold text-zinc-900">Nexus Spring of Code (Open-Source Contribution Event):</strong> Contributor; ranked 125th out of 990 participants. Merged 5 PRs on backend.</li>
                 <li><strong className="font-bold text-zinc-900">Google Big Code Challenge 2026 (Qualifier Round):</strong> Qualified, placing among the Top 15,000 participants globally.</li>
                 <li><strong className="font-bold text-zinc-900">IBM & Coursera — Generative AI Specialization:</strong> Completed <em>Vector Databases for RAG: An Introduction</em> and <em>Advanced RAG with Vector Databases and Retrievers</em>.</li>
-                <li><strong className="font-bold text-zinc-900">LeetCode:</strong> 50-Day consistency badge; solved 200+ DSA problems across arrays, linked lists, trees, graphs, and recursion.</li>
+                <li><strong className="font-bold text-zinc-900">LeetCode (<a href="https://leetcode.com/u/DIYAGARG_08/" target="_blank" rel="noopener noreferrer" className="text-purple-700 font-bold hover:underline">DIYAGARG_08</a>):</strong> 50-Day consistency badge; solved 200+ DSA problems across arrays, linked lists, trees, graphs, and recursion.</li>
                 <li><strong className="font-bold text-zinc-900">AI Symposium, University of South Dakota:</strong> Attended sessions on AI applications in computational biology and medicine.</li>
               </ul>
             </div>

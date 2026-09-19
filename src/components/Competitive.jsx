@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, CheckCircle2 } from 'lucide-react';
+import { Trophy, CheckCircle2, ExternalLink } from 'lucide-react';
 
 const resumeAchievements = [
   {
@@ -24,8 +24,9 @@ const resumeAchievements = [
   {
     title: 'LeetCode Consistency',
     subtitle: '50-Day Consistency Badge',
-    detail: 'Solved 200+ DSA problems across arrays, graphs, trees, DP',
+    detail: 'Solved 200+ DSA problems across arrays, graphs, trees, DP (User: DIYAGARG_08)',
     badge: '200+ Solved',
+    url: 'https://leetcode.com/u/DIYAGARG_08/',
   },
 ];
 
@@ -77,9 +78,21 @@ export default function Competitive() {
                   <p className="text-xs text-slate-600 leading-relaxed">{item.detail}</p>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-purple-100 flex items-center gap-1 text-[10px] font-bold text-slate-500">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Verified Achievement</span>
+                <div className="pt-4 mt-4 border-t border-purple-100 flex items-center justify-between text-[10px] font-bold text-slate-500">
+                  <div className="flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Verified</span>
+                  </div>
+                  {item.url && (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#7C3AED] hover:underline flex items-center gap-0.5 font-bold"
+                    >
+                      Profile <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
                 </div>
               </motion.div>
             );
