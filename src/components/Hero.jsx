@@ -129,7 +129,7 @@ export default function Hero({ onOpenResume }) {
               className="text-[110px] sm:text-[145px] font-black tracking-tighter uppercase fill-none stroke-purple-900/10 stroke-[2]"
               style={{ fontFamily: 'sans-serif' }}
             >
-              PORTFOLIO
+              DIYA GARG
             </text>
 
             {/* Glowing Looping Path 1 (Behind Text loop) */}
@@ -156,22 +156,16 @@ export default function Hero({ onOpenResume }) {
             </text>
           </svg>
 
-          {/* Bold Foreground Title Text: PORTFOLIO / DIYA GARG */}
+          {/* Bold Foreground Title Text: DIYA GARG */}
           <div className="relative z-10 flex flex-col items-center justify-center">
             <h1 className="text-6xl sm:text-8xl md:text-[110px] font-black tracking-tighter uppercase leading-none font-sans select-none drop-shadow-xl">
               <span className="bg-gradient-to-r from-purple-700 via-fuchsia-600 to-pink-600 bg-clip-text text-transparent">
-                PORT
-              </span>
-              <span className="bg-gradient-to-r from-pink-600 via-fuchsia-600 to-purple-700 bg-clip-text text-transparent">
-                FOLIO
+                DIYA
+              </span>{' '}
+              <span className="bg-gradient-to-r from-pink-600 via-fuchsia-600 to-purple-700 bg-clip-text text-transparent ml-2 sm:ml-4">
+                GARG
               </span>
             </h1>
-            
-            <div className="mt-2 px-6 py-1 rounded-full bg-white/80 backdrop-blur-md border border-purple-200/80 shadow-md">
-              <span className="text-sm sm:text-lg font-black tracking-widest uppercase text-purple-950">
-                DIYA GARG
-              </span>
-            </div>
           </div>
         </motion.div>
 
