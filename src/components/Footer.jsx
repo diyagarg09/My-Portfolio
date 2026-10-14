@@ -31,7 +31,7 @@ export default function Footer({ onOpenResume }) {
           Hiring for Software, AI or ML roles? <span className="text-gradient accent-serif text-[1.08em]">Let's talk.</span>
         </h2>
         <p className="mt-4 text-muted max-w-xl">
-          I'm open to internships and new-grad opportunities. The fastest way to reach me is email — I usually reply within a day.
+          I'm open to internships and new-grad opportunities. The best way to reach me is email.
         </p>
 
         <div className="mt-9 flex flex-wrap items-center gap-3">
