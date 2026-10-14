@@ -1,139 +1,100 @@
 import React, { useState, useEffect } from 'react';
-import { Home, User, FolderGit2, FileText, Menu, X, Trophy } from 'lucide-react';
+import { Menu, X, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const navigationLinks = [
-  { name: 'Home', href: '#home', icon: Home },
-  { name: 'About', href: '#about', icon: User },
-  { name: 'Projects', href: '#projects', icon: FolderGit2 },
-  { name: 'Milestones', href: '#milestones', icon: Trophy },
-  { name: 'Resume', href: '#resume', icon: FileText, isResumeTrigger: true },
+const links = [
+  { name: 'About', id: 'about' },
+  { name: 'Projects', id: 'projects' },
+  { name: 'Skills', id: 'skills' },
+  { name: 'Achievements', id: 'milestones' },
+  { name: 'Contact', id: 'contact' },
 ];
 
 export default function Navbar({ onOpenResume }) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState('');
 
   useEffect(() => {
-    const handleScroll = () => {
+    const onScroll = () => {
       setIsScrolled(window.scrollY > 20);
-
-      const sections = ['home', 'about', 'skills', 'projects', 'milestones'];
-      const scrollPosition = window.scrollY + 100;
-
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-            break;
-          }
-        }
+      const y = window.scrollY + 120;
+      let current = '';
+      for (const { id } of links) {
+        const el = document.getElementById(id);
+        if (el && y >= el.offsetTop) current = id;
       }
+      setActive(current);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleNavClick = (e, link) => {
-    e.preventDefault();
-    if (link.isResumeTrigger) {
-      onOpenResume();
-      setIsMobileMenuOpen(false);
-      return;
-    }
-
-    const targetId = link.href.substring(1);
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      window.scrollTo({
-        top: targetElement.offsetTop - 80,
-        behavior: 'smooth',
-      });
-      setActiveSection(targetId);
-      setIsMobileMenuOpen(false);
-    }
+  const openResume = () => {
+    setIsOpen(false);
+    onOpenResume();
   };
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'vibrant-navbar py-3 shadow-md' : 'bg-transparent py-5'
+      className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
+        isScrolled ? 'bg-ink/80 backdrop-blur-xl border-b border-line py-3' : 'py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
-        
-        {/* Logo (Diya Garg) */}
-        <a 
-          href="#home" 
-          className="flex items-center gap-1.5 group font-bold tracking-tight text-xl sm:text-2xl shrink-0 whitespace-nowrap"
-        >
-          <span className="font-bold text-2xl text-purple-950 tracking-tight hover:text-[#EC4899] transition-colors">Diya Garg</span>
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 flex items-center justify-between gap-4">
+        <a href="#home" className="font-display font-bold text-lg tracking-tight text-fg flex items-center gap-2">
+          <span className="w-8 h-8 rounded-lg btn-primary flex items-center justify-center text-sm font-bold">DG</span>
+          <span className="hidden sm:inline">Diya Garg</span>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-2 lg:gap-5 shrink-0">
-          {navigationLinks.map((link) => {
-            const Icon = link.icon;
-            const isLinkActive = activeSection === link.href.substring(1);
-            return (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link)}
-                className={`flex items-center gap-1.5 text-sm font-semibold transition-all py-1.5 px-3 rounded-lg whitespace-nowrap ${
-                  isLinkActive
-                    ? 'text-[#7C3AED] bg-purple-50'
-                    : 'text-slate-600 hover:text-[#EC4899] hover:bg-pink-50/50'
-                }`}
-              >
-                <Icon className={`w-4 h-4 shrink-0 ${isLinkActive ? 'text-[#7C3AED]' : 'text-slate-400'}`} />
-                <span>{link.name}</span>
-              </a>
-            );
-          })}
+        <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
+          {links.map((l) => (
+            <a
+              key={l.id}
+              href={`#${l.id}`}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                active === l.id ? 'text-fg bg-surface-2' : 'text-muted hover:text-fg'
+              }`}
+            >
+              {l.name}
+            </a>
+          ))}
+          <button onClick={openResume} className="btn-primary ml-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition">
+            <FileText className="w-4 h-4" /> Resume
+          </button>
         </nav>
 
-        {/* Mobile Toggle */}
-        <div className="flex md:hidden items-center gap-3 shrink-0">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-lg border border-purple-100 text-purple-950 bg-white"
-          >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isOpen}
+          className="md:hidden btn-ghost p-2 rounded-lg"
+        >
+          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
+        {isOpen && (
+          <motion.nav
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden cosmic-navbar border-t border-purple-100 px-6 py-4 flex flex-col gap-3"
+            className="md:hidden overflow-hidden bg-ink/95 backdrop-blur-xl border-b border-line"
+            aria-label="Mobile"
           >
-            {navigationLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link)}
-                  className="flex items-center gap-3 text-sm font-semibold text-slate-700 py-2 hover:text-[#EC4899]"
-                >
-                  <Icon className="w-4 h-4 text-[#7C3AED]" />
-                  {link.name}
+            <div className="px-5 py-4 flex flex-col gap-1">
+              {links.map((l) => (
+                <a key={l.id} href={`#${l.id}`} onClick={() => setIsOpen(false)} className="py-2.5 text-sm font-medium text-muted hover:text-fg">
+                  {l.name}
                 </a>
-              );
-            })}
-          </motion.div>
+              ))}
+              <button onClick={openResume} className="btn-primary mt-2 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg text-sm font-semibold">
+                <FileText className="w-4 h-4" /> Resume
+              </button>
+            </div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </header>

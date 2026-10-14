@@ -1,150 +1,110 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, Code2, Database, Brain, Sparkles, Server } from 'lucide-react';
-
-const stats = [
-  {
-    label: 'Banasthali CGPA',
-    value: '8.45/10',
-    icon: Code2,
-    description: 'B.Tech CS & AI (through Sem 4)',
-    color: 'from-[#7C3AED] to-pink-500',
-  },
-  {
-    label: 'Class 12 Score',
-    value: '89.33%',
-    icon: Award,
-    description: 'PCM Science (The Adhyyan School)',
-    color: 'from-indigo-600 to-fuchsia-500',
-  },
-  {
-    label: 'LeetCode Solved',
-    value: '200+',
-    icon: Server,
-    description: 'Profile: DIYAGARG_08',
-    url: 'https://leetcode.com/u/DIYAGARG_08/',
-    color: 'from-emerald-500 to-teal-400',
-  },
-];
+import { Brain, Server, Code2 } from 'lucide-react';
+import SectionHeader from './SectionHeader';
 
 const pillars = [
   {
-    title: 'Intelligent Systems & Vision',
-    desc: 'Integrating Gemini LLM, custom knowledge graphs, and vector search with real-time OpenCV pipeline architectures.',
+    title: 'Applied ML & LLM systems',
+    desc: 'Knowledge graphs, RAG with vector search, and LLM integration (Gemini, Groq) — with explainability via SHAP and confidence scoring.',
     icon: Brain,
   },
   {
-    title: 'Robust Full-Stack Security',
-    desc: 'Deploying JWT authentication, multi-layered rate-limiting, and dockerized microservices with SQLite or MongoDB data structures.',
-    icon: Database,
+    title: 'Backend & APIs',
+    desc: 'FastAPI and Node/Express services with JWT auth, Redis caching, async pipelines, and pytest coverage.',
+    icon: Server,
   },
   {
-    title: 'Clean Aesthetic Codebase',
-    desc: 'Writing highly modular, maintainable, and type-safe systems with structured n8n automation pipelines.',
-    icon: Sparkles,
+    title: 'Problem solving',
+    desc: '300+ LeetCode problems across arrays, trees, graphs, recursion and DP; open-source contributor with merged backend PRs.',
+    icon: Code2,
+  },
+];
+
+const education = [
+  {
+    school: 'Banasthali Vidyapith',
+    detail: 'B.Tech, Computer Science & Artificial Intelligence',
+    score: 'CGPA 8.45 / 10 (through Sem 4)',
+    when: '2024 – 2028',
+  },
+  {
+    school: 'The Adhyyan School, Meerut',
+    detail: 'Class 12, Science (PCM)',
+    score: '89.33%',
+    when: '2023 – 2024',
   },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="py-24 px-6 relative bg-white text-zinc-900 border-t border-purple-100">
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Section Title */}
-        <div className="text-center mb-16">
-          <h2 className="text-xs uppercase tracking-widest font-extrabold text-[#7C3AED] mb-3">About Me</h2>
-          <p className="text-3xl sm:text-4xl font-extrabold text-purple-950">
-            Engineered with Precision, Driven by Intelligence
-          </p>
-          <div className="w-12 h-1 bg-gradient-to-r from-[#7C3AED] to-[#EC4899] mx-auto mt-4 rounded-full shadow-[0_0_10px_rgba(124,58,237,0.3)]" />
-        </div>
+    <section id="about" className="py-24 px-5 sm:px-6 border-t border-line">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader title="Engineer who ships, measures, and explains." />
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
-          {/* Left Column: Bio & Stats */}
-          <div className="lg:col-span-6 flex flex-col gap-8 text-left">
-            <div>
-              <h3 className="text-xl font-bold text-purple-950 mb-4">
-              Software & ML Developer
-              </h3>
-              <p className="text-slate-600 leading-relaxed mb-6">
-                Currently pursuing B.Tech in Computer Science & Artificial Intelligence at Banasthali Vidyapith (CGPA 8.45/10). I specialize in developing intelligent applications, healthcare assistants, and robust full-stack platforms.
-              </p>
-              <p className="text-slate-600 leading-relaxed">
-                Active contributor in open-source events like Nexus Spring of Code (Ranked 125th/990) and qualifier in Google Big Code Challenge 2026.
-              </p>
-            </div>
+        <div className="grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-5">
+            <p className="text-muted leading-relaxed text-[15px]">
+              I'm a Computer Science &amp; AI undergraduate who enjoys turning messy, real-world problems into
+              reliable software. My projects span healthcare triage, fraud detection, personal finance and
+              document automation — each built end-to-end, from data pipeline to API to UI.
+            </p>
+            <p className="text-muted leading-relaxed text-[15px] mt-4">
+              I care about correctness and evidence: benchmarking models properly, handling class imbalance,
+              writing tests, and making results explainable to the people who use them.
+            </p>
 
-            {/* Statistics Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2">
-              {stats.map((stat, index) => {
-                const CardWrapper = stat.url ? 'a' : 'div';
-                const cardProps = stat.url
-                  ? { href: stat.url, target: '_blank', rel: 'noopener noreferrer' }
-                  : {};
-
-                return (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <CardWrapper
-                      {...cardProps}
-                      className="p-5 rounded-2xl vibrant-card flex flex-col justify-between block h-full hover:scale-105 transition-transform"
-                    >
-                      <div className="flex items-center justify-between mb-4">
-                        <span className={`w-8 h-8 rounded-lg bg-gradient-to-tr ${stat.color} flex items-center justify-center text-white shadow-xs`}>
-                          <stat.icon className="w-4.5 h-4.5" />
-                        </span>
-                      </div>
-                      <div>
-                        <h4 className="text-2xl font-extrabold text-purple-950">{stat.value}</h4>
-                        <p className="text-xs font-bold text-[#7C3AED] mt-1 mb-0.5">{stat.label}</p>
-                        <p className="text-[10px] text-slate-500 leading-tight">{stat.description}</p>
-                      </div>
-                    </CardWrapper>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Right Column: Pillars of Expertise */}
-          <div className="lg:col-span-6 flex flex-col gap-6">
-            <h3 className="text-xl font-bold text-purple-950 text-left mb-2 pl-2">
-              Engineering Core Pillars
-            </h3>
-            
-            <div className="flex flex-col gap-4">
-              {pillars.map((pillar, index) => (
-                <motion.div
-                  key={pillar.title}
-                  className="p-6 rounded-2xl vibrant-card flex items-start gap-4 group"
-                  initial={{ opacity: 0, x: 25 }}
+            <h3 className="mt-10 mb-4 text-xs font-mono uppercase tracking-widest text-muted">Education</h3>
+            <ol className="relative ml-1.5 space-y-6">
+              <motion.span
+                aria-hidden="true"
+                className="absolute left-0 top-1 bottom-1 w-px bg-gradient-to-b from-accent to-accent-2 origin-top"
+                initial={{ scaleY: 0 }}
+                whileInView={{ scaleY: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, ease: 'easeOut' }}
+              />
+              {education.map((e, i) => (
+                <motion.li
+                  key={e.school}
+                  className="pl-6 relative"
+                  initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.15 }}
+                  transition={{ delay: 0.3 + i * 0.2 }}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-purple-50 text-[#7C3AED] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                    <pillar.icon className="w-5.5 h-5.5" />
+                  <span className="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-accent ring-4 ring-ink" />
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-3">
+                    <p className="font-semibold text-fg">{e.school}</p>
+                    <span className="text-xs font-mono text-muted">{e.when}</span>
                   </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-purple-950 text-base mb-1.5 group-hover:text-[#7C3AED] transition-colors">
-                      {pillar.title}
-                    </h4>
-                    <p className="text-sm text-slate-600 leading-relaxed">
-                      {pillar.desc}
-                    </p>
-                  </div>
-                </motion.div>
+                  <p className="text-sm text-muted">{e.detail}</p>
+                  <p className="text-sm text-accent-2 font-medium mt-0.5">{e.score}</p>
+                </motion.li>
               ))}
-            </div>
+            </ol>
           </div>
 
+          <div className="lg:col-span-7 grid gap-4">
+            {pillars.map((p, i) => (
+              <motion.div
+                key={p.title}
+                className="card p-6 flex gap-5"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ delay: i * 0.08 }}
+              >
+                <span className="shrink-0 w-11 h-11 rounded-xl bg-accent/10 border border-accent/25 text-accent flex items-center justify-center">
+                  <p.icon className="w-5 h-5" />
+                </span>
+                <div>
+                  <h4 className="font-semibold text-fg">{p.title}</h4>
+                  <p className="text-sm text-muted leading-relaxed mt-1.5">{p.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

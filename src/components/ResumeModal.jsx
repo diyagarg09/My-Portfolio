@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X, Mail, Phone, ExternalLink, Printer } from 'lucide-react';
 import { Github, Linkedin, Leetcode } from './icons';
+import { profile } from '../data/profile';
 
 export default function ResumeModal({ isOpen, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
   if (!isOpen) return null;
 
   const handlePrint = () => {
@@ -11,31 +18,42 @@ export default function ResumeModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-purple-950/40 backdrop-blur-md print:p-0 print:bg-white print:relative print:z-0">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm print:p-0 print:bg-white print:relative print:z-0"
+    >
       <motion.div
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
-        className="w-full max-w-4xl bg-white text-zinc-900 rounded-3xl border border-purple-100 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col justify-between print:border-none print:shadow-none print:max-h-full print:rounded-none"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Resume"
+        onClick={(e) => e.stopPropagation()}
+        initial={{ scale: 0.96, y: 12 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.96, y: 12 }}
+        className="w-full max-w-4xl bg-white text-zinc-900 rounded-2xl border border-line shadow-2xl overflow-hidden max-h-[92vh] flex flex-col justify-between print:border-none print:shadow-none print:max-h-full print:rounded-none"
       >
-        
+
         {/* Header Bar */}
-        <div className="flex items-center justify-between px-6 py-3.5 border-b border-purple-100 bg-[#faf9f7] print:hidden">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-line bg-surface text-fg print:hidden">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-            <span className="text-xs font-bold text-purple-900">Diya Garg — Official Resume</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+            <span className="text-xs font-mono text-muted">diya_garg_resume.pdf</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#EC4899] text-xs font-bold text-white hover:from-[#6D28D9] hover:to-[#DB2777] transition-all shadow-xs"
+              className="btn-primary flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold"
             >
               <Printer className="w-3.5 h-3.5" />
-              Print / Save PDF
+              Download PDF
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full border border-purple-100 text-zinc-500 hover:text-zinc-900 hover:bg-purple-50 transition-colors"
+              aria-label="Close resume"
+              className="btn-ghost p-1.5 rounded-lg"
             >
               <X className="w-4 h-4" />
             </button>
@@ -43,12 +61,12 @@ export default function ResumeModal({ isOpen, onClose }) {
         </div>
 
         {/* Resume Content Document Body */}
-        <div className="p-8 overflow-y-auto flex-grow print:p-0 print:overflow-visible text-left bg-white font-serif leading-relaxed">
+        <div className="p-8 overflow-y-auto flex-grow print:p-0 print:overflow-visible text-left bg-white leading-relaxed">
           <div id="resume-print-area" className="max-w-3xl mx-auto flex flex-col gap-5 text-zinc-900">
             
             {/* Header / Name */}
             <div className="text-center border-b border-zinc-300 pb-4">
-              <h1 className="text-4xl font-bold tracking-tight text-zinc-900 mb-1 font-serif">Diya Garg</h1>
+              <h1 className="text-4xl font-bold tracking-tight text-zinc-900 mb-1">Diya Garg</h1>
               <p className="text-sm font-semibold italic text-purple-700 mb-2">Software & Full-Stack Developer</p>
               <div className="flex flex-wrap justify-center items-center gap-3 text-xs text-zinc-700 font-sans">
                 <span className="flex items-center gap-1">
@@ -56,9 +74,9 @@ export default function ResumeModal({ isOpen, onClose }) {
                   +91 9412782129
                 </span>
                 <span>|</span>
-                <a href="mailto:diya@example.com" className="flex items-center gap-1 hover:underline text-purple-700">
+                <a href={`mailto:${profile.email}`} className="flex items-center gap-1 hover:underline text-purple-700">
                   <Mail className="w-3 h-3" />
-                  Email
+                  {profile.email}
                 </a>
                 <span>|</span>
                 <a href="https://www.linkedin.com/in/diyagarg09/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline text-purple-700">
@@ -206,7 +224,7 @@ export default function ResumeModal({ isOpen, onClose }) {
                 <li><strong className="font-bold text-zinc-900">Nexus Spring of Code (Open-Source Contribution Event):</strong> Contributor; ranked 125th out of 990 participants. Merged 5 PRs on backend.</li>
                 <li><strong className="font-bold text-zinc-900">Google Big Code Challenge 2026 (Qualifier Round):</strong> Qualified, placing among the Top 15,000 participants globally.</li>
                 <li><strong className="font-bold text-zinc-900">IBM & Coursera — Generative AI Specialization:</strong> Completed <em>Vector Databases for RAG: An Introduction</em> and <em>Advanced RAG with Vector Databases and Retrievers</em>.</li>
-                <li><strong className="font-bold text-zinc-900">LeetCode (<a href="https://leetcode.com/u/DIYAGARG_08/" target="_blank" rel="noopener noreferrer" className="text-purple-700 font-bold hover:underline">DIYAGARG_08</a>):</strong> 50-Day consistency badge; solved 200+ DSA problems across arrays, linked lists, trees, graphs, and recursion.</li>
+                <li><strong className="font-bold text-zinc-900">LeetCode (<a href="https://leetcode.com/u/DIYAGARG_08/" target="_blank" rel="noopener noreferrer" className="text-purple-700 font-bold hover:underline">DIYAGARG_08</a>):</strong> 100-Day consistency badge; solved 300+ DSA problems across arrays, linked lists, trees, graphs, and recursion.</li>
                 <li><strong className="font-bold text-zinc-900">AI Symposium, University of South Dakota:</strong> Attended sessions on AI applications in computational biology and medicine.</li>
               </ul>
             </div>
@@ -214,13 +232,7 @@ export default function ResumeModal({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* Footer info */}
-        <div className="bg-[#FBF9FF] px-6 py-3 border-t border-[#E2D9F7] flex items-center justify-between text-[10px] text-purple-900 font-sans print:hidden">
-          <span>Official Resume Document</span>
-          <span>Close window or press Esc to return</span>
-        </div>
-
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

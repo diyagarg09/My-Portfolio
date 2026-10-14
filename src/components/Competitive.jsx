@@ -1,104 +1,72 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, CheckCircle2, ExternalLink } from 'lucide-react';
+import { Trophy, GitPullRequest, Award, Code2, ArrowUpRight } from 'lucide-react';
+import SectionHeader from './SectionHeader';
+import { profile } from '../data/profile';
 
-const resumeAchievements = [
-  {
-    title: 'Nexus Spring of Code',
-    subtitle: 'Open-Source Contribution Event',
-    detail: 'Ranked 125th out of 990 participants; merged 5 PRs on backend',
-    badge: 'Rank 125/990',
-  },
+const achievements = [
   {
     title: 'Google Big Code Challenge 2026',
-    subtitle: 'Qualifier Round',
-    detail: 'Qualified, placing among the Top 15,000 participants globally',
-    badge: 'Top 15k Global',
+    detail: 'Qualified in the qualifier round, placing among the top 15,000 participants globally.',
+    badge: 'Top 15k global',
+    icon: Trophy,
   },
   {
-    title: 'IBM & Coursera Gen AI',
-    subtitle: 'Generative AI Specialization',
-    detail: 'Vector Databases for RAG & Advanced RAG with Retrievers',
+    title: 'Nexus Spring of Code',
+    detail: 'Ranked 125th of 990 participants in this open-source event; merged 5 backend pull requests.',
+    badge: 'Rank 125 / 990',
+    icon: GitPullRequest,
+  },
+  {
+    title: 'LeetCode — DIYAGARG_08',
+    detail: 'Solved 300+ DSA problems across arrays, linked lists, trees, graphs, recursion and DP; 100-day consistency badge.',
+    badge: '300+ solved',
+    icon: Code2,
+    url: profile.leetcode,
+  },
+  {
+    title: 'IBM × Coursera — Generative AI',
+    detail: 'Completed "Vector Databases for RAG" and "Advanced RAG with Vector Databases and Retrievers".',
     badge: 'Certified',
-  },
-  {
-    title: 'LeetCode Consistency',
-    subtitle: '50-Day Consistency Badge',
-    detail: 'Solved 200+ DSA problems across arrays, graphs, trees, DP (User: DIYAGARG_08)',
-    badge: '200+ Solved',
-    url: 'https://leetcode.com/u/DIYAGARG_08/',
+    icon: Award,
   },
 ];
 
 export default function Competitive() {
   return (
-    <section id="milestones" className="py-24 px-6 relative bg-[#faf9f7] text-zinc-900 border-t border-purple-100">
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-xs uppercase tracking-widest font-extrabold text-[#7C3AED] mb-3">Milestones</h2>
-          <p className="text-3xl sm:text-4xl font-extrabold text-purple-950">
-            Achievements & Recognition
-          </p>
-          <div className="w-12 h-1 bg-gradient-to-r from-[#7C3AED] to-[#EC4899] mx-auto mt-4 rounded-full shadow-[0_0_10px_rgba(124,58,237,0.3)]" />
-        </div>
+    <section id="milestones" className="py-24 px-5 sm:px-6 border-t border-line">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader title="Achievements & certifications." />
 
-        {/* Achievements Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {resumeAchievements.map((item, index) => {
-            const isEven = index % 2 === 0;
+        <div className="grid md:grid-cols-2 gap-4">
+          {achievements.map((a, i) => {
+            const Wrapper = a.url ? 'a' : 'div';
+            const linkProps = a.url ? { href: a.url, target: '_blank', rel: 'noopener noreferrer' } : {};
             return (
               <motion.div
-                key={item.title}
-                className="p-6 rounded-3xl purple-card flex flex-col justify-between text-left relative overflow-hidden bg-white"
-                initial={{ opacity: 0, y: 20 }}
+                key={a.title}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ delay: (i % 2) * 0.08 }}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className={`w-9 h-9 rounded-xl flex items-center justify-center ${
-                      isEven ? 'bg-purple-50 text-[#7C3AED]' : 'bg-pink-50 text-[#EC4899]'
-                    }`}>
-                      <Trophy className="w-4.5 h-4.5" />
-                    </span>
-                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
-                      isEven 
-                        ? 'text-[#7C3AED] bg-purple-50 border-purple-100' 
-                        : 'text-[#EC4899] bg-pink-50 border-pink-100'
-                    }`}>
-                      {item.badge}
-                    </span>
+                <Wrapper {...linkProps} className="card p-6 flex gap-5 h-full group">
+                  <span className="shrink-0 w-11 h-11 rounded-xl bg-warm/10 border border-warm/25 text-warm flex items-center justify-center">
+                    <a.icon className="w-5 h-5" />
+                  </span>
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <h3 className="font-semibold text-fg">{a.title}</h3>
+                      <span className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-warm/10 text-warm border border-warm/20">{a.badge}</span>
+                      {a.url && <ArrowUpRight className="w-4 h-4 text-muted group-hover:text-fg transition-colors" />}
+                    </div>
+                    <p className="text-sm text-muted leading-relaxed mt-2">{a.detail}</p>
                   </div>
-
-                  <h3 className="text-base font-bold text-purple-950 mb-0.5">{item.title}</h3>
-                  <p className={`text-xs font-semibold mb-3 ${isEven ? 'text-[#7C3AED]' : 'text-[#EC4899]'}`}>{item.subtitle}</p>
-                  <p className="text-xs text-slate-600 leading-relaxed">{item.detail}</p>
-                </div>
-
-                <div className="pt-4 mt-4 border-t border-purple-100 flex items-center justify-between text-[10px] font-bold text-slate-500">
-                  <div className="flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Verified</span>
-                  </div>
-                  {item.url && (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#7C3AED] hover:underline flex items-center gap-0.5 font-bold"
-                    >
-                      Profile <ExternalLink className="w-3 h-3" />
-                    </a>
-                  )}
-                </div>
+                </Wrapper>
               </motion.div>
             );
           })}
         </div>
-
       </div>
     </section>
   );

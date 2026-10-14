@@ -1,118 +1,78 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Shield, Laptop, Layers } from 'lucide-react';
+import { Code2, Brain, Server, Monitor, Database, Wrench, LayoutGrid } from 'lucide-react';
+import SectionHeader from './SectionHeader';
 
-const categories = [
-  { id: 'all', name: 'All Skills', icon: Layers },
-  { id: 'ai', name: 'AI, ML & NLP', icon: Brain },
-  { id: 'web', name: 'Web, DB & Automation', icon: Shield },
-  { id: 'core', name: 'Languages & Tools', icon: Laptop },
+const groups = [
+  { id: 'lang', title: 'Languages', icon: Code2, items: ['Python', 'C++', 'C', 'JavaScript', 'SQL'] },
+  { id: 'ml', title: 'ML & AI', icon: Brain, items: ['Scikit-learn', 'PyTorch', 'TensorFlow', 'XGBoost', 'Pandas', 'NumPy', 'SHAP', 'LangChain', 'RAG', 'Vector Search', 'Knowledge Graphs', 'Gemini / Groq LLMs'] },
+  { id: 'backend', title: 'Backend', icon: Server, items: ['FastAPI', 'Flask', 'Node.js', 'Express', 'REST APIs', 'JWT Auth', 'pytest'] },
+  { id: 'frontend', title: 'Frontend', icon: Monitor, items: ['React', 'HTML', 'CSS', 'Tailwind CSS', 'Chart.js', 'D3.js'] },
+  { id: 'data', title: 'Data & Automation', icon: Database, items: ['MongoDB', 'SQLite', 'Redis', 'n8n', 'PyPDF2'] },
+  { id: 'tools', title: 'Tools & Fundamentals', icon: Wrench, items: ['Git & GitHub', 'VS Code', 'Jupyter', 'MongoDB Compass', 'Data Structures', 'Algorithms'] },
 ];
 
-const skillTags = [
-  { name: 'Python', category: 'core' },
-  { name: 'C', category: 'core' },
-  { name: 'C++', category: 'core' },
-  
-  { name: 'Supervised/Unsupervised Learning', category: 'ai' },
-  { name: 'Vector Databases', category: 'ai' },
-  { name: 'Knowledge Graphs', category: 'ai' },
-  { name: 'Google Gemini', category: 'ai' },
-  { name: 'Groq LLM', category: 'ai' },
-  { name: 'FastAPI', category: 'ai' },
-  { name: 'Scikit-learn', category: 'ai' },
-  { name: 'PyTorch', category: 'ai' },
-  { name: 'TensorFlow', category: 'ai' },
-  { name: 'Pandas & NumPy', category: 'ai' },
-  { name: 'PyPDF2', category: 'ai' },
-  { name: 'LangChain', category: 'ai' },
-  
-  { name: 'React', category: 'web' },
-  { name: 'JavaScript', category: 'web' },
-  { name: 'HTML & CSS', category: 'web' },
-  { name: 'MongoDB', category: 'web' },
-  { name: 'SQLite', category: 'web' },
-  { name: 'Redis', category: 'web' },
-  { name: 'n8n Workflow Engine', category: 'web' },
-  
-  { name: 'VS Code', category: 'core' },
-  { name: 'Jupyter Notebook', category: 'core' },
-  { name: 'MongoDB Compass', category: 'core' },
-  { name: 'GitHub', category: 'core' },
-];
+const tabs = [{ id: 'all', title: 'All', icon: LayoutGrid }, ...groups];
 
 export default function Skills() {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [active, setActive] = useState('all');
+  const visible = active === 'all' ? groups : groups.filter((g) => g.id === active);
 
   return (
-    <section id="skills" className="py-24 px-6 relative bg-[#faf9f7] text-zinc-900 border-t border-purple-100">
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-xs uppercase tracking-widest font-extrabold text-[#7C3AED] mb-3">Expertise</h2>
-          <p className="text-3xl sm:text-4xl font-extrabold text-purple-950">
-            Technical Skills Matrix
-          </p>
-          <div className="w-12 h-1 bg-gradient-to-r from-[#7C3AED] to-[#EC4899] mx-auto mt-4 rounded-full shadow-[0_0_10px_rgba(124,58,237,0.3)]" />
-        </div>
+    <section id="skills" className="py-24 px-5 sm:px-6 border-t border-line">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader title="Technical skills." subtitle="Everything listed here is used in at least one project above." />
 
-        {/* Filter Navigation */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-          {categories.map((category) => {
-            const isCatActive = activeCategory === category.id;
+        {/* Filter tabs */}
+        <div role="tablist" aria-label="Skill categories" className="flex gap-2 overflow-x-auto pb-2 mb-8 -mx-1 px-1">
+          {tabs.map((t) => {
+            const isActive = active === t.id;
             return (
               <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 ${
-                  isCatActive
-                    ? 'bg-gradient-to-r from-[#7C3AED] to-[#EC4899] text-white shadow-md shadow-purple-500/20'
-                    : 'bg-white text-slate-700 border border-purple-100 hover:border-[#EC4899]'
+                key={t.id}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActive(t.id)}
+                className={`relative shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  isActive ? 'text-ink' : 'text-muted hover:text-fg border border-line'
                 }`}
               >
-                <category.icon className="w-3.5 h-3.5" />
-                {category.name}
+                {isActive && (
+                  <motion.span layoutId="skill-tab" className="absolute inset-0 rounded-lg btn-primary" transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
+                )}
+                <t.icon className="relative w-4 h-4" />
+                <span className="relative">{t.title}</span>
               </button>
             );
           })}
         </div>
 
-        {/* Skills Tag Cloud */}
-        <motion.div 
-          layout
-          className="flex flex-wrap justify-center gap-3.5 max-w-4xl mx-auto min-h-[160px] p-6 rounded-3xl bg-white border border-purple-100 shadow-sm relative overflow-hidden"
-        >
+        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <AnimatePresence mode="popLayout">
-            {skillTags.map((skill) => {
-              const isHighlighted = activeCategory === 'all' || activeCategory === skill.category;
-              
-              let colorClasses = 'border-purple-100 text-slate-500 bg-white';
-              
-              if (isHighlighted) {
-                colorClasses = 'border-[#EC4899]/30 text-[#7C3AED] bg-purple-50 shadow-2xs';
-              }
-
-              return (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ 
-                    opacity: isHighlighted ? 1 : 0.25, 
-                    scale: isHighlighted ? 1 : 0.95,
-                  }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                  key={skill.name}
-                  className={`px-4 py-2 rounded-xl border text-xs font-semibold transition-all duration-300 hover:-translate-y-0.5 cursor-default select-none ${colorClasses}`}
-                >
-                  {skill.name}
-                </motion.div>
-              );
-            })}
+            {visible.map((g) => (
+              <motion.div
+                key={g.id}
+                layout
+                className="card p-6"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.25 }}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-9 h-9 rounded-lg bg-accent-2/10 border border-accent-2/25 text-accent-2 flex items-center justify-center">
+                    <g.icon className="w-4 h-4" />
+                  </span>
+                  <h3 className="font-semibold text-fg">{g.title}</h3>
+                  <span className="ml-auto text-xs font-mono text-muted">{g.items.length}</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {g.items.map((s) => <span key={s} className="chip">{s}</span>)}
+                </div>
+              </motion.div>
+            ))}
           </AnimatePresence>
         </motion.div>
-
       </div>
     </section>
   );

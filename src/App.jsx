@@ -1,56 +1,68 @@
-import React, { useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import React, { useState, useCallback } from 'react';
+import { AnimatePresence, MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Competitive from './components/Competitive';
-
 import Footer from './components/Footer';
 import ResumeModal from './components/ResumeModal';
-import IntroSplashScreen from './components/IntroSplashScreen';
+import IntroOverlay from './components/IntroOverlay';
+
+const INTRO_KEY = 'intro-seen';
+
+// Play the intro once per browser session, and never for reduced-motion users.
+function shouldPlayIntro() {
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return false;
+  try {
+    return !sessionStorage.getItem(INTRO_KEY);
+  } catch {
+    return true;
+  }
+}
 
 function App() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
-  const [showSplash, setShowSplash] = useState(true);
+  const [showIntro, setShowIntro] = useState(shouldPlayIntro);
+  const openResume = () => setIsResumeOpen(true);
+
+  const finishIntro = useCallback(() => {
+    try {
+      sessionStorage.setItem(INTRO_KEY, '1');
+    } catch {
+      // storage unavailable (private mode); the intro will simply replay next visit
+    }
+    setShowIntro(false);
+  }, []);
 
   return (
-    <div className="min-h-screen text-zinc-900 flex flex-col justify-between selection:bg-pink-100 selection:text-pink-700" style={{ backgroundColor: '#faf9f7' }}>
-      {/* Intro Splash Screen on Load */}
+    <MotionConfig reducedMotion="user">
       <AnimatePresence>
-        {showSplash && (
-          <IntroSplashScreen onFinish={() => setShowSplash(false)} />
-        )}
+        {showIntro && <IntroOverlay onFinish={finishIntro} />}
       </AnimatePresence>
 
-      {/* Sticky Navigation Bar */}
-      <Navbar onOpenResume={() => setIsResumeOpen(true)} />
+      <div className="min-h-screen bg-ink text-fg flex flex-col">
+        <Navbar onOpenResume={openResume} />
 
-      {/* Main Sections */}
-      <main className="flex-grow">
-        <Hero onOpenResume={() => setIsResumeOpen(true)} />
-        <About />
-        <Skills />
-        <Projects />
-        <Competitive />
-      </main>
+        <main className="flex-grow">
+          <Hero onOpenResume={openResume} ready={!showIntro} />
+          <About />
+          <Projects />
+          <Skills />
+          <Competitive />
+        </main>
 
-      {/* Footer */}
-      <Footer />
+        <Footer onOpenResume={openResume} />
 
-      {/* Exact Resume Document Modal Overlay */}
-      <AnimatePresence>
-        {isResumeOpen && (
-          <ResumeModal
-            isOpen={isResumeOpen}
-            onClose={() => setIsResumeOpen(false)}
-          />
-        )}
-      </AnimatePresence>
-    </div>
+        <AnimatePresence>
+          {isResumeOpen && (
+            <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+          )}
+        </AnimatePresence>
+      </div>
+    </MotionConfig>
   );
 }
 
 export default App;
-

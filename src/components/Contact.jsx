@@ -59,8 +59,8 @@ export default function Contact() {
           reply_to: formData.email,
           message: formData.message,
           to_name: 'Diya Garg',
-          to_email: 'diyagarg9122005@gmail.com',
-          'diyagarg9122005@gmail.com': 'diyagarg9122005@gmail.com',
+          to_email: 'diyagarg322@gmail.com',
+          'diyagarg322@gmail.com': 'diyagarg322@gmail.com',
         },
         EMAILJS_PUBLIC_KEY
       );

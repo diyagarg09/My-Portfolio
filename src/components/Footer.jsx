@@ -1,85 +1,69 @@
-import React from 'react';
-import { Mail, Heart, ArrowUp } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, Copy, Check, FileText, ArrowUp } from 'lucide-react';
 import { Github, Linkedin, Leetcode } from './icons';
+import { profile } from '../data/profile';
 
-export default function Footer() {
-  const handleScrollTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+const socials = [
+  { href: profile.github, label: 'GitHub', Icon: Github },
+  { href: profile.linkedin, label: 'LinkedIn', Icon: Linkedin },
+  { href: profile.leetcode, label: 'LeetCode', Icon: Leetcode },
+];
+
+export default function Footer({ onOpenResume }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      window.location.href = `mailto:${profile.email}`;
+    }
   };
 
   return (
-    <footer className="bg-[#faf9f7] text-zinc-900 border-t border-purple-100 py-12 px-6 relative">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        
-        {/* Logo and Tagline */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-1">
-          <span className="font-extrabold text-lg text-purple-950">
-            Diya Garg
-          </span>
-          <span className="text-xs text-slate-500">
-            Software & Full-Stack Developer
-          </span>
-        </div>
+    <footer id="contact" className="relative border-t border-line overflow-hidden">
+      <div className="absolute inset-0 glow opacity-70 pointer-events-none" aria-hidden="true" />
 
-        {/* Copyright */}
-        <div className="text-xs text-slate-500 flex items-center gap-1 order-3 md:order-2">
-          <span>&copy; {new Date().getFullYear()} Diya Garg. Designed with</span>
-          <Heart className="w-3.5 h-3.5 text-[#EC4899] fill-current" />
-          <span>using React & Tailwind CSS.</span>
-        </div>
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-6 py-24">
+        <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-fg max-w-3xl">
+          Hiring for Software, AI or ML roles? <span className="text-gradient accent-serif text-[1.08em]">Let's talk.</span>
+        </h2>
+        <p className="mt-4 text-muted max-w-xl">
+          I'm open to internships and new-grad opportunities. The fastest way to reach me is email — I usually reply within a day.
+        </p>
 
-        {/* Social Links & Back to Top */}
-        <div className="flex items-center gap-3 order-2 md:order-3">
-          <a
-            href="https://github.com/diyagarg09"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full border border-purple-100 bg-white text-slate-600 hover:text-[#7C3AED] hover:border-[#7C3AED] flex items-center justify-center transition-all hover:scale-105"
-            title="GitHub"
-          >
-            <Github className="w-4 h-4" />
+        <div className="mt-9 flex flex-wrap items-center gap-3">
+          <a href={`mailto:${profile.email}`} className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition">
+            <Mail className="w-4 h-4" /> {profile.email}
           </a>
-
-          <a
-            href="https://www.linkedin.com/in/diyagarg09/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full border border-purple-100 bg-white text-slate-600 hover:text-[#EC4899] hover:border-[#EC4899] flex items-center justify-center transition-all hover:scale-105"
-            title="LinkedIn"
-          >
-            <Linkedin className="w-4 h-4" />
-          </a>
-
-          <a
-            href="https://leetcode.com/u/DIYAGARG_08/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full border border-purple-100 bg-white text-slate-600 hover:text-[#F59E0B] hover:border-[#F59E0B] flex items-center justify-center transition-all hover:scale-105"
-            title="LeetCode (DIYAGARG_08)"
-          >
-            <Leetcode className="w-4 h-4" />
-          </a>
-
-          <a
-            href="mailto:diya@example.com"
-            className="w-9 h-9 rounded-full border border-purple-100 bg-white text-slate-600 hover:text-[#7C3AED] hover:border-[#7C3AED] flex items-center justify-center transition-all hover:scale-105"
-            title="Email"
-          >
-            <Mail className="w-4 h-4" />
-          </a>
-
-          <button
-            onClick={handleScrollTop}
-            className="w-9 h-9 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#EC4899] text-white flex items-center justify-center transition-all hover:scale-105 ml-2 shadow-sm shadow-purple-500/20"
-            title="Back to Top"
-          >
-            <ArrowUp className="w-4 h-4" />
+          <button onClick={copyEmail} className="btn-ghost inline-flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold transition" aria-label="Copy email address">
+            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            {copied ? 'Copied' : 'Copy'}
+          </button>
+          <button onClick={onOpenResume} className="btn-ghost inline-flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold transition">
+            <FileText className="w-4 h-4" /> Resume
           </button>
         </div>
 
+        <div className="mt-20 pt-8 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-5">
+          <p className="text-xs text-muted">© {new Date().getFullYear()} Diya Garg · Built with React, Tailwind &amp; Framer Motion</p>
+          <div className="flex items-center gap-2">
+            {socials.map(({ href, label, Icon }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label} className="btn-ghost w-10 h-10 rounded-lg inline-flex items-center justify-center transition">
+                <Icon className="w-4 h-4" />
+              </a>
+            ))}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              aria-label="Back to top"
+              className="btn-ghost w-10 h-10 rounded-lg inline-flex items-center justify-center transition ml-2"
+            >
+              <ArrowUp className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
       </div>
     </footer>
   );
