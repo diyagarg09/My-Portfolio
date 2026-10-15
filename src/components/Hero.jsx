@@ -63,7 +63,7 @@ export default function Hero({ onOpenResume, ready = true }) {
             <motion.p {...fadeUp(0.12, ready)} className="mt-6 text-lg text-muted max-w-xl leading-relaxed">
               CS &amp; AI undergrad at <span className="text-fg font-medium">{profile.school}</span> building
               ML-powered systems and production-style backends — from a neuro-symbolic healthcare assistant
-              to a fraud-detection ensemble at <span className="text-fg font-medium">~0.99 ROC-AUC</span>.
+              to a fraud-detection ensemble with <span className="text-fg font-medium">96% precision</span>.
             </motion.p>
 
             <motion.div {...fadeUp(0.18, ready)} className="mt-3 flex items-center gap-1.5 text-sm text-muted">

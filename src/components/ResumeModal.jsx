@@ -155,14 +155,16 @@ export default function ResumeModal({ isOpen, onClose }) {
                 <div>
                   <div className="flex justify-between items-baseline mb-1">
                     <h3 className="font-bold text-xs text-zinc-900">
-                      Credit Card Fraud Detection <span className="font-normal italic text-zinc-600">| Python, Scikit-learn, XGBoost, TensorFlow, Flask, SHAP, SQLite</span>
+                      Credit Card Fraud Detection <span className="font-normal italic text-zinc-600">| Python, Scikit-learn, XGBoost, imbalanced-learn, SHAP, Flask, Streamlit</span>
                     </h3>
                     <a href="https://github.com/diyagarg09/credit-fraud-detectionn" target="_blank" rel="noopener noreferrer" className="text-xs text-purple-700 font-semibold hover:underline flex items-center gap-0.5">
                       GitHub <ExternalLink className="w-2.5 h-2.5" />
                     </a>
                   </div>
                   <ul className="list-disc list-outside ml-4 text-[11px] text-zinc-700 flex flex-col gap-1">
-                    <li>Trained and benchmarked 7 ML models (Logistic Regression, Random Forest, XGBoost, Gradient Boosting, SVM, Neural Network, Ensemble Voting) on the Kaggle credit-card fraud dataset, using SMOTE for class-imbalance correction and GridSearchCV for hyperparameter tuning; ensemble model reached ~96% accuracy, ~95% F1, and ~0.99 ROC-AUC on the held-out test set.</li>
+                    <li>Benchmarked 6 models (Logistic Regression, Random Forest, XGBoost, Gradient Boosting, SVM, soft-voting ensemble) on 284k transactions with 0.17% fraud, placing SMOTE inside the training pipeline so no synthetic samples leak into validation or test data.</li>
+                    <li>Ensemble reached 0.83 PR-AUC and 96% precision, catching 77% of fraud with 3 false alarms in 56k held-out transactions, using decision thresholds tuned on a separate validation split.</li>
+                    <li>Served predictions through a JWT-secured Flask API and a Streamlit dashboard with batch CSV scoring and SHAP explanations; covered the pipeline with 30 pytest tests.</li>
                   </ul>
                 </div>
 
